@@ -11,6 +11,9 @@ coords = {
     'deploy': (80, 424),
     'deploy2': (1540, 416),
     'hero1': (440, 800),
+    'hero2': (560, 800),
+    'hero3': (680, 800),
+    'hero4': (800, 800),
     'surrender': (120, 670),
     'surrender_yes': (840, 535),
     'return_home': (800, 770),
@@ -42,10 +45,27 @@ if __name__ == "__main__":
         adb_tap(*coords['deploy'])
         adb_tap(*coords['deploy2'])
         adb_tap(*coords['deploy'])
-        time.sleep(1)
+        time.sleep(0.5)
         adb_tap(*coords['hero1'])
         time.sleep(0.5)
         adb_tap(*coords['deploy2'])
+        time.sleep(0.5)
+        adb_tap(*coords['hero2'])
+        time.sleep(0.5)
+        adb_tap(*coords['deploy'])
+        time.sleep(0.5)
+        adb_tap(*coords['hero3'])
+        time.sleep(0.5)
+        adb_tap(*coords['deploy2'])
+        time.sleep(0.5)
+        adb_tap(*coords['hero4'])
+        time.sleep(0.5)
+        adb_tap(*coords['deploy'])
+        time.sleep(2.5)
+        adb_tap(*coords['hero1'])
+        adb_tap(*coords['hero2'])
+        adb_tap(*coords['hero3'])
+        adb_tap(*coords['hero4'])
         time.sleep(35)
         adb_tap(*coords['surrender'])
         time.sleep(1)
