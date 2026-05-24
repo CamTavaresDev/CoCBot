@@ -18,3 +18,5 @@ coords = {
     'surrender_yes': (1100, 684),
     'return_home': (900, 900),
 }
+
+deploy_locations = ['deploy', 'deploy2', 'deploy3', 'deploy4']

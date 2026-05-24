@@ -2,7 +2,8 @@
 import time
 import random
 import subprocess
-from coords import coords
+from coords import coords, deploy_locations
+from config import BATTLE_LOOPS
 
 
 def adb_tap(x, y):
@@ -13,31 +14,22 @@ def adb_tap(x, y):
 
 
 def deploy_troops():
-    # Alternate between deploy and deploy2, six pairs + one extra
+    # Alternate between deploy locations, six pairs + one extra
     for _ in range(6):
         adb_tap(*coords['deploy'])
         adb_tap(*coords['deploy2'])
-    adb_tap(*coords['deploy'])
-
-    # Alternate between deploy3 and deploy4, six pairs + one extra
-    for _ in range(6):
         adb_tap(*coords['deploy3'])
         adb_tap(*coords['deploy4'])
-    adb_tap(*coords['deploy3'])
+    adb_tap(*coords['deploy'])
 
 
 def deploy_heroes():
-    hero_deploy_pairs = [
-        ('hero1', 'deploy2'),
-        ('hero2', 'deploy'),
-        ('hero3', 'deploy2'),
-        ('hero4', 'deploy'),
-    ]
-    for hero, deploy_point in hero_deploy_pairs:
+    for hero in ['hero1', 'hero2', 'hero3', 'hero4']:
         adb_tap(*coords[hero])
         time.sleep(0.5)
-        adb_tap(*coords[deploy_point])
-        time.sleep(0.5)
+        for deploy_point in deploy_locations:
+            adb_tap(*coords[deploy_point])
+            time.sleep(0.5)
 
 
 def activate_all_heroes():
@@ -66,7 +58,15 @@ def run_battle():
     adb_tap(*coords['surrender_yes']); time.sleep(1)
     adb_tap(*coords['return_home']);   time.sleep(3)
 
-
 if __name__ == "__main__":
-    while True:
-        run_battle()
+    if BATTLE_LOOPS is None:
+        loop = 1
+        while True:
+            run_battle()
+            print(f"Battle {loop} complete — running forever")
+            loop += 1
+    else:
+        for i in range(BATTLE_LOOPS):
+            run_battle()
+            remaining = BATTLE_LOOPS - (i + 1)
+            print(f"Battle {i + 1}/{BATTLE_LOOPS} complete — {remaining} loop(s) remaining")
